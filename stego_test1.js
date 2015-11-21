@@ -1,5 +1,6 @@
 var fs = require('fs');
 var PNG = require('pngjs').PNG;
+var stego = require('./stego');
 
 console.log(process.argv);
 
