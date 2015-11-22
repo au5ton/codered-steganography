@@ -95,13 +95,15 @@ stego.encodeBitInChannel = function(pixel, channel, bit, position) {
 };
 
 //Takes a pixel array and encodes binary data into the pixel array
-stego.decodeDataFromPixelArray = function(pixelArray) {
+stego.decodeDataFromPixelArray = function(pixelArray, dataType) {
 
     var binaryArrayOfData = [];
-    var pixel, byte;
+    var pixel, byte, textResult = '';
     for(var i = 0; i < pixelArray.length; i++) {
         pixel = pixelArray[i];
-        byte = decodeByteFromPixel(pixel);
+        byte = stego.decodeByteFromPixel(pixel);
+        //console.log(byte);
+        textResult += String.fromCharCode(byte);
 
         // TODO: push to buffer
 
@@ -109,6 +111,7 @@ stego.decodeDataFromPixelArray = function(pixelArray) {
             break;
         }
     }
+    return textResult;
 };
 
 stego.decodeByteFromPixel = function(pixel) {
@@ -117,17 +120,17 @@ stego.decodeByteFromPixel = function(pixel) {
 
         // decode bit from appropriate position in appropriate channel
         if (i == 0 || i == 1) {
-            bit = decodeBitFromChannel(pixel, 'r', i);
+            bit = stego.decodeBitFromChannel(pixel, 'r', i);
         }
         else if (i == 2 || i == 3) {
-            bit = decodeBitFromChannel(pixel, 'g', i % 2);
+            bit = stego.decodeBitFromChannel(pixel, 'g', i % 2);
         }
         else if (i == 4 || i == 5) {
-            bit = decodeBitFromChannel(pixel, 'b', i % 2);
+            bit = stego.decodeBitFromChannel(pixel, 'b', i % 2);
         }
         else {
             // position-1 to do LSBs 2 and 1 instead of 1 and 0
-            bit = decodeBitFromChannel(pixel, 'alpha', (i % 2)-1);
+            bit = stego.decodeBitFromChannel(pixel, 'alpha', (i % 2)-1);
         }
 
         if (bit) {
