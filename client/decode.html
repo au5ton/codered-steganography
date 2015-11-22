@@ -2,24 +2,46 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Decode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stego: Decode</title>
+
+    <script src="js/jquery-latest.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/resample.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data" id="form">
-        <h1>Decode</h1>
-        <p>
-            PNG image:
-        </p>
-        <input type="file" name="original_image" accept="image/png">
-        <p>
-            Expected type:
-        </p>
-        <select name="expected_type" form="form">
-            <option value="text">UTF-8 Text</option>
-            <option value="binary">Binary file</option>
-        </select>
-        <input type="submit" style="display: block; margin-top: 20px;">
-    </form>
+    <div class="container">
+        <div class="card-panel white main-panel">
+
+
+            <form method="post" enctype="multipart/form-data" id="form">
+                <h1>Decode</h1>
+                <p>
+                    PNG image:
+                </p>
+                <input type="file" name="original_image" accept="image/png">
+                <p>
+                    Expected type:
+                </p>
+                <select class="browser-default" name="expected_type" form="form">
+                    <option value="text">UTF-8 Text</option>
+                    <option value="binary">Binary file</option>
+                </select>
+                <button style="display: block; margin-top: 15px;" class="btn waves-effect waves-light red" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+
+            <a href="/" class="waves-effect waves-light btn red"><i class="material-icons left">chevron_left</i> Homepage</a>
+
+
+        </div>
+    </div>
 </body>
 </html>

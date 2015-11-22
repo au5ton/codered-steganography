@@ -2,47 +2,51 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>Encode</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Stego: Encode</title>
+
+    <script src="js/jquery-latest.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/resample.js"></script>
+
+    <link href='https://fonts.googleapis.com/css?family=Syncopate' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="css/materialize.min.css" rel="stylesheet">
+    <link href="css/app.css" rel="stylesheet">
+
 </head>
 <body>
-
     <div class="container">
-
         <div class="card-panel white main-panel">
-            <h3 class="pretitle">CodeRED: Liftoff</h3>
-            <h1 class="title">Stego</h1>
-            <h5 class="subtitle">
-                Image steganography software.
-            </h5>
-            <p>
-                Stego is a project by Austin, Matt, Arnaud, and Ismael that was made in 24 hours at <a href="">CodeRED: Liftoff</a>. Short description. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed sit amet posuere purus, in facilisis lectus. In gravida ipsum ut nisl sagittis, at lacinia ipsum porta. Pellentesque leo ipsum, suscipit vel porttitor vel, tincidunt a urna. Pellentesque pellentesque pharetra ex, sed pellentesque tortor. Nunc consectetur molestie urna. Nullam sed magna purus. In gravida urna ac turpis aliquet venenatis.
-            </p>
-            <a href="encode" class="waves-effect waves-light btn red">Encode an image</a>
-            <a href="decode" class="waves-effect waves-light btn red">Decode an image</a>
+
+
+            <form method="post" enctype="multipart/form-data" id="form">
+
+                <h1>Encode</h1>
+                <p>
+                    PNG image:
+                </p>
+                <input type="file" name="photos" accept="image/png">
+                <p>
+                    Encode type:
+                </p>
+                <select class="browser-default" name="encode_type" form="form">
+                    <option value="text">UTF-8 Text</option>
+                    <option value="binary">Binary file</option>
+                </select>
+                <input type="text" name="text_data" value="abc">
+                <input type="file" name="photos">
+                <button class="btn waves-effect waves-light red" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>
+            </form>
+
+            <a href="/" class="waves-effect waves-light btn red"><i class="material-icons left">chevron_left</i> Homepage</a>
+
+
+
+
         </div>
-
-
     </div>
-    <script src="js/index.js"></script>
-
-    <form method="post" enctype="multipart/form-data" id="form">
-
-        <h1>Encode</h1>
-        <p>
-            PNG image:
-        </p>
-        <input type="file" name="photos" accept="image/png">
-        <p>
-            Encode type:
-        </p>
-        <select name="encode_type" form="form">
-            <option value="text">UTF-8 Text</option>
-            <option value="binary">Binary file</option>
-        </select>
-        <input type="text" name="text_data" value="abc">
-        <input type="file" name="photos">
-        <input type="submit" style="display: block; margin-top: 20px;">
-    </form>
 </body>
 </html>
