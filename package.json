@@ -18,6 +18,7 @@
   "homepage": "https://github.com/au5ton/codered-steganography#readme",
   "dependencies": {
     "express": "^4.13.3",
+    "jade": "^1.11.0",
     "multer": "^1.1.0",
     "pngjs": "^2.1.0"
   }
