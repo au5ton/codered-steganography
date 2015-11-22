@@ -97,12 +97,56 @@ stego.encodeBitInChannel = function(pixel, channel, bit, position) {
 //Takes a pixel array and encodes binary data into the pixel array
 stego.decodeDataFromPixelArray = function(pixelArray) {
 
-
+    var binaryArrayOfData = [];
+    var pixel, byte;
     for(var i = 0; i < pixelArray.length; i++) {
-        //
+        pixel = pixelArray[i];
+        byte = decodeByteFromPixel(pixel);
+
+        // TODO: push to buffer
+
+        if (pixel['alpha'] & (1 << 0)) {
+            break;
+        }
     }
+};
 
+stego.decodeByteFromPixel = function(pixel) {
+    var byte = 0;
+    for (var i = 0; i < 8; i++) {
 
+        // decode bit from appropriate position in appropriate channel
+        if (i == 0 || i == 1) {
+            bit = decodeBitFromChannel(pixel, 'r', i);
+        }
+        else if (i == 2 || i == 3) {
+            bit = decodeBitFromChannel(pixel, 'g', i % 2);
+        }
+        else if (i == 4 || i == 5) {
+            bit = decodeBitFromChannel(pixel, 'b', i % 2);
+        }
+        else {
+            // position-1 to do LSBs 2 and 1 instead of 1 and 0
+            bit = decodeBitFromChannel(pixel, 'alpha', (i % 2)-1);
+        }
+
+        if (bit) {
+            byte |= (1 << 7-i);
+        }
+    }
+    return byte;
+};
+
+stego.decodeBitFromChannel = function(pixel, channel, position) {
+    var bit;
+    // get value of bit
+    if (pixel[channel] & (1 << 1-position)) {
+        bit = 1;
+    }
+    else {
+        bit = 0;
+    }
+    return bit;
 };
 
 
