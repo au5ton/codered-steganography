@@ -9,25 +9,24 @@ var app = express();
 var stego = require('./stego');
 
 
-app.use('/static', express.static('static'));
-app.use('/uploads', express.static('uploads'));
+app.use(express.static('static'));
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
 app.get('/encode', function (req, res) {
-    res.sendFile('encode.html', {root: './static'});
+    res.sendFile('encode.html', {root: './client'});
 });
 
 app.post('/encode', upload.array('files', 2), function (req, res, next) {
-
+    
     console.log(req.files);
     console.log(req.body);
 
     //Output directories
-    var original_file_path = 'test_img/'+req.files[0].originalname;
-    var encoded_file_path = 'test_img_out/'+req.files[0].originalname;
+    var original_file_path = 'static/data/original_files/'+req.files[0].originalname;
+    var encoded_file_path = 'static/data/processed_files/'+req.files[0].originalname;
 
     fs.rename(req.files[0].path, original_file_path, function(){
 
@@ -57,6 +56,7 @@ app.post('/encode', upload.array('files', 2), function (req, res, next) {
                     var encrypt = crypto.createCipher('aes-256-cbc', pw);
                     stringified = encrypt.update(stringified, 'binary', 'binary') + encrypt.final('binary');
                 }
+                console.log(stringified);
                 processed = stego.encodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), stringified, 'text');
             }
 
@@ -76,11 +76,9 @@ app.post('/encode', upload.array('files', 2), function (req, res, next) {
                 }
             }
 
-            this.pack().pipe(fs.createWriteStream(encoded_file_path));
-
-            res.json({
-                old_file: original_file_path,
-                new_file: encoded_file_path
+            var stream = this.pack().pipe(fs.createWriteStream(encoded_file_path));
+            stream.on('finish', function(){
+                res.redirect('/data/processed_files/'+req.files[0].originalname);
             });
         });
     });
@@ -88,7 +86,7 @@ app.post('/encode', upload.array('files', 2), function (req, res, next) {
 });
 
 app.get('/decode', function (req, res) {
-    res.sendFile('decode.html', {root: './static'});
+    res.sendFile('decode.html', {root: './client'});
 });
 
 app.post('/decode', upload.single('original_image'), function (req, res, next) {
@@ -131,16 +129,23 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
                 }
                 //console.log('data decoded');
                 //console.log(data);
+                //console.log(data);
                 var parsed = JSON.parse(data);
                 //console.log('data parsed');
                 //parsed[0] file name
                 //parsed[1] the buffer as a base64 string
                 var filename = parsed[0];
                 data = new Buffer(parsed[1], 'binary');
-                fs.writeFile(filename+'.bin', data, 'binary', function(err){
-                    res.setHeader('Content-disposition', 'attachment; filename='+filename);
-                    res.sendFile(filename, {root: '.'});
-                    //TODO: delete the file
+                var temp_file_name = 'temp/'+req.filename+parsed[0];
+
+                fs.mkdir('temp', function(){
+                    fs.writeFile(temp_file_name, data, 'binary', function(err){
+                        res.setHeader('Content-disposition', 'attachment; filename='+parsed[0]);
+                        res.sendFile(req.filename+parsed[0], {root: 'temp'}, function(){
+                            //file transport done, delete the temp file
+                            fs.unlink('temp/'+req.filename+parsed[0]);
+                        });
+                    });
                 });
             }
             catch (err) {
