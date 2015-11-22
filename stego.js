@@ -113,7 +113,8 @@ stego.decodeDataFromPixelArray = function(pixelArray, dataType) {
             textResult += String.fromCharCode(byte);
         }
         else { //assume binary
-            textResult.push(byte);
+            //textResult.push(byte);
+            textResult += String.fromCharCode(byte);
         }
         if (pixel['alpha'] & (1 << 0)) {
             break;

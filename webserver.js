@@ -8,15 +8,14 @@ var app = express();
 var stego = require('./stego');
 
 
-app.use('/static', express.static('static'));
-app.use('/uploads', express.static('uploads'));
+app.use(express.static('static'));
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
 app.get('/encode', function (req, res) {
-    res.sendFile('encode.html', {root: './static'});
+    res.sendFile('encode.html', {root: './client'});
 });
 
 app.post('/encode', upload.array('photos', 2), function (req, res, next) {
@@ -25,8 +24,8 @@ app.post('/encode', upload.array('photos', 2), function (req, res, next) {
     console.log(req.body);
 
     //Output directories
-    var original_file_path = 'test_img/'+req.files[0].originalname;
-    var encoded_file_path = 'test_img_out/'+req.files[0].originalname;
+    var original_file_path = 'static/data/original_files/'+req.files[0].originalname;
+    var encoded_file_path = 'static/data/processed_files/'+req.files[0].originalname;
 
     fs.rename(req.files[0].path, original_file_path, function(){
 
@@ -45,7 +44,8 @@ app.post('/encode', upload.array('photos', 2), function (req, res, next) {
             else if(req.body.encode_type === 'binary') {
                 console.log('Processing a binary file.');
                 var buffer = fs.readFileSync(req.files[1].path);
-                processed = stego.encodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), buffer, 'binary');
+                var stringified = JSON.stringify([req.files[1].originalname, buffer.toString('base64')]);
+                processed = stego.encodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), stringified, 'text');
             }
             else {
                 console.log('something else??')
@@ -67,11 +67,9 @@ app.post('/encode', upload.array('photos', 2), function (req, res, next) {
                 }
             }
 
-            this.pack().pipe(fs.createWriteStream(encoded_file_path));
-
-            res.json({
-                old_file: original_file_path,
-                new_file: encoded_file_path
+            var stream = this.pack().pipe(fs.createWriteStream(encoded_file_path));
+            stream.on('finish', function(){
+                res.redirect('/data/processed_files/'+req.files[0].originalname);
             });
         });
     });
@@ -79,7 +77,7 @@ app.post('/encode', upload.array('photos', 2), function (req, res, next) {
 });
 
 app.get('/decode', function (req, res) {
-    res.sendFile('decode.html', {root: './static'});
+    res.sendFile('decode.html', {root: './client'});
 });
 
 app.post('/decode', upload.single('original_image'), function (req, res, next) {
@@ -93,20 +91,30 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
         filterType: 4
     })).on('parsed', function() {
 
-        //stego.reformatPixelArrayToBufferData();
-
         var decoded = stego.decodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), req.body.expected_type);
-
 
         if(decoded.dataType === 'text') {
             res.send(decoded.data);
         }
         else {
-            console.log('Binary:');
             //console.log(decoded.data);
-            console.log('Buffer:');
-            //console.log(new Buffer(decoded.data));
-            res.send(new Buffer(decoded.data));
+            var parsed = JSON.parse(decoded.data);
+            //console.log(parsed);
+            //parsed[0] file name
+            //parsed[1] the buffer as a base64 string
+
+            var temp_file_name = 'temp/'+req.filename+parsed[0];
+
+            fs.mkdir('temp', function(){
+                fs.writeFile(temp_file_name, new Buffer(parsed[1], 'base64'), 'binary', function(err){
+                    res.setHeader('Content-disposition', 'attachment; filename='+parsed[0]);
+                    res.sendFile(req.filename+parsed[0], {root: 'temp'}, function(){
+                        //file transport done, delete the temp file
+                        fs.unlink('temp/'+req.filename+parsed[0]);
+                    });
+                });
+            });
+
         }
     });
 });
