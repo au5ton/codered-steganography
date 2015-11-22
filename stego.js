@@ -36,15 +36,16 @@ stego.encodeDataFromPixelArray = function(pixelArray, data) {
     var encodedPixelArray = pixelArray;
     var pixel, byte;
     for(var i = 0; i < data.length; i++) {
-        byte = data[i].charCodeAt(1);
+        byte = data[i].charCodeAt(0);
         pixel = pixelArray[i];
         pixel = stego.encodeByteInPixel(pixel, byte);
-        if (i == data.length-1) {
-            pixel['alpha'] |= (1 << 0);
+        if (i === data.length-1) {
+            pixel['alpha'] |= (1 << 0); //sets to 1
         }
         else {
-            pixel['alpha'] &= ~(1 << 0);
+            pixel['alpha'] &= ~(1 << 0); //sets to 0
         }
+        console.log(pixel);
         encodedPixelArray[i] = pixel;
     }
     return encodedPixelArray;
@@ -52,6 +53,7 @@ stego.encodeDataFromPixelArray = function(pixelArray, data) {
 
 stego.encodeByteInPixel = function(pixel, byte) {
     var bit;
+    console.log('Byte: ' + byte);
     for (var i = 0; i < 8; i++) {
         // get value of bit
         if (byte & (1 << 7-i)) {
@@ -76,7 +78,6 @@ stego.encodeByteInPixel = function(pixel, byte) {
             pixel = stego.encodeBitInChannel(pixel, 'alpha', bit, (i % 2)-1);
         }
     }
-    console.log(pixel);
     return pixel;
 };
 
@@ -89,7 +90,7 @@ stego.encodeBitInChannel = function(pixel, channel, bit, position) {
         // set bit to 0
         pixel[channel] &= ~(1 << 1-position);
     }
-    console.log("Encoding " + bit + " in channel " + channel + " in position " + position);
+    console.log("Encoding " + bit + " in channel " + channel + " in position " + (1-position));
     return pixel;
 };
 
