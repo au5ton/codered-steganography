@@ -45,7 +45,8 @@ app.post('/encode', upload.array('photos', 2), function (req, res, next) {
             else if(req.body.encode_type === 'binary') {
                 console.log('Processing a binary file.');
                 var buffer = fs.readFileSync(req.files[1].path);
-                processed = stego.encodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), buffer, 'binary');
+                var stringified = JSON.stringify([req.files[1].originalname, buffer.toString('base64')]);
+                processed = stego.encodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), stringified, 'text');
             }
             else {
                 console.log('something else??')
@@ -93,20 +94,24 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
         filterType: 4
     })).on('parsed', function() {
 
-        //stego.reformatPixelArrayToBufferData();
-
         var decoded = stego.decodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), req.body.expected_type);
-
 
         if(decoded.dataType === 'text') {
             res.send(decoded.data);
         }
         else {
-            console.log('Binary:');
-            //console.log(decoded.data);
-            console.log('Buffer:');
-            //console.log(new Buffer(decoded.data));
-            res.send(new Buffer(decoded.data));
+            console.log(decoded.data);
+            var parsed = JSON.parse(decoded.data);
+            console.log(parsed);
+            //parsed[0] file name
+            //parsed[1] the buffer as a base64 string
+
+            fs.writeFile(parsed[0]+'.bin', new Buffer(parsed[1], 'base64'), 'binary', function(err){
+                res.setHeader('Content-disposition', 'attachment; filename='+parsed[0]);
+                res.sendFile(parsed[0]+'.bin', {root: '.'});
+                //TODO: delete the file
+            });
+
         }
     });
 });
