@@ -100,16 +100,23 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
             res.send(decoded.data);
         }
         else {
-            console.log(decoded.data);
+            //console.log(decoded.data);
             var parsed = JSON.parse(decoded.data);
-            console.log(parsed);
+            //console.log(parsed);
             //parsed[0] file name
             //parsed[1] the buffer as a base64 string
 
-            fs.writeFile(parsed[0]+'.bin', new Buffer(parsed[1], 'base64'), 'binary', function(err){
-                res.setHeader('Content-disposition', 'attachment; filename='+parsed[0]);
-                res.sendFile(parsed[0]+'.bin', {root: '.'});
-                //TODO: delete the file
+            var temp_file_name = 'temp/'+req.filename+parsed[0];
+
+            fs.mkdir('temp', function(){
+                fs.writeFile(temp_file_name, new Buffer(parsed[1], 'base64'), 'binary', function(err){
+                    res.setHeader('Content-disposition', 'attachment; filename='+parsed[0]);
+                    res.sendFile(req.filename+parsed[0], {root: 'temp'}, function(){
+                        //file transport done, delete the temp file
+                        fs.unlink('temp/'+req.filename+parsed[0]);
+                    });
+
+                });
             });
 
         }
