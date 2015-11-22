@@ -1,2 +1,4 @@
 node_modules/
-uploads/*
+uploads/
+test_img/
+test_img_out/

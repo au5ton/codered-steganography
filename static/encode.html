@@ -6,12 +6,23 @@
     <title>Encode</title>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
+    <form method="post" enctype="multipart/form-data" id="form">
+
         <h1>Encode</h1>
-        PNG image:<br>
+        <p>
+            PNG image:
+        </p>
+        <input type="file" name="photos" accept="image/png">
+        <p>
+            Encode type:
+        </p>
+        <select name="encode_type" form="form">
+            <option value="text">UTF-8 Text</option>
+            <option value="binary">Binary file</option>
+        </select>
         <input type="text" name="text_data" value="abc">
-        <input type="file" name="original_image" accept="image/png">
-        <input type="submit">
+        <input type="file" name="photos">
+        <input type="submit" style="display: block; margin-top: 20px;">
     </form>
 </body>
 </html>
