@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<title>Stego Image Encoder</title>
+	<link rel="stylesheet" href="bootstrap.css">
+	<link rel="stylesheet" href="main.css">
+	<script src="script.js"></script> 
+	<div class="introduction">
+		<h1>Welcome to Stego Image Encoder</h1>
+		<p>
+			This program will allow you to embed information inside a picture. All you need is an image and a message.
+		</p>	
+	</div>
+
+	<div class="input">
+		<form class="form-inline">
+			<div class="form-group">
+				<label for="imageInput">Image</label>
+				<input type="file" id="imageInput">
+			</div>
+			<div class="form-group">
+				<label for="messageInput">Secret Message</label>
+				<input type="text" class="form-control" id="messageInput" placeholder="Message">
+			</div>
+			<button type="submit" class="btn btn-default" onclick="script.js">Submit</button>
+		</form>
+		htmlAcceptor(form-group.messageInput.textContent, form-group.imageInput.textContent)
+	</div>
+</html>
