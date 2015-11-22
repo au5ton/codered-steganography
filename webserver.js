@@ -10,6 +10,7 @@ var stego = require('./stego');
 
 
 app.use(express.static('static'));
+//app.use(express.static('uploads'));
 
 app.get('/', function (req, res) {
     res.send('Hello World!');
@@ -56,7 +57,6 @@ app.post('/encode', upload.array('files', 2), function (req, res, next) {
                     var encrypt = crypto.createCipher('aes-256-cbc', pw);
                     stringified = encrypt.update(stringified, 'binary', 'binary') + encrypt.final('binary');
                 }
-                console.log(stringified);
                 processed = stego.encodeDataFromPixelArray(stego.parseImageBufferToPixelArray(this), stringified, 'text');
             }
 
@@ -128,7 +128,6 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
                     data = decrypt.update(decoded.data, 'binary', 'binary') + decrypt.final('binary');
                 }
                 //console.log('data decoded');
-                //console.log(data);
                 //console.log(data);
                 var parsed = JSON.parse(data);
                 //console.log('data parsed');
