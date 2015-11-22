@@ -1,7 +1,26 @@
 # codered-steganography
 CodeRED steganography project
 
-Austin
-Arnaud
-Matt 
-Ismael
+##Prerequisites
+- Requires node.js and npm to be installed
+
+##Installation and running
+- Clone the repository: `git clone https://github.com/au5ton/codered-steganography.git`
+- CD into the directory: `cd codered-steganography`
+- Install the dependencies: `npm install`
+- Run the server: `node webserver.js`
+- Open the website: navigate to `localhost:3000` in your web browser
+- You have the site running!
+
+##How to use
+- Take any PNG image (We've given you some files to mess around with in the Test Files folder)
+- Take any file under half the size of the PNG image
+- Use the Encode section to hide your file in the PNG image (a password is optional, but you have to remember it!)
+- After pressing the submit button, you will be redirected to your new PNG image which contains the file you hid in it. If it doesn't download, right-click and Save As.
+- Congratulations! You've saved a file within another file, super low-key and awesome. Even better if you used a password and encrypted it.
+
+
+- Now, what good is randomly encoding this data if I can't get it back?
+- Navigate to the Decode section of the website. You'll have to go back to the homepage.
+- In your Decode section, input *only* the PNG that you've encoded. Don't put the wrong one. In expected type, put the type of data you're expecting to get back from the decoding process. (If you encoded a file, select file, etc). If you encrypted your data with a password, now would be the time to input that same password.
+Once you submit, you'll either be greated with a bad password error, or your hidden file will be downloaded through your browser.
