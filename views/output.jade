@@ -2,7 +2,7 @@ doctype html
 html(lang='en')
   head
     meta(charset='utf-8')
-    title Stego: Error
+    title Stego: Text output
     script(src='js/jquery-latest.min.js')
     script(src='js/materialize.min.js')
     link(href='css/materialize.min.css', rel='stylesheet')
@@ -21,9 +21,16 @@ html(lang='en')
       input[type=text]:focus:not([readonly])+label {
       color: #f9a825 !important;
       }
+      .quotes::before {
+      content: '“';
+      }
+      .quotes::after {
+      content: '”';
+      }
   body
     .container
       .card-panel.white
-        h3 Error
-        p #{text}
+        p Decoded text:
+        h3.quotes #{text}
+        //p #{text}
         a(href='/') Click to go back to the homepage

@@ -112,7 +112,9 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
                     text = decrypt.update(text, 'binary', 'utf8') + decrypt.final('utf8');
                 }
                 //console.log(text)
-                res.send(text);
+                res.render('output', {
+                    text: text
+                });
             }
             catch (err) {
                 res.render('error', {
