@@ -11,7 +11,7 @@ var stego = require('./stego');
 app.use(express.static('static'));
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.sendFile('index.html', {root: './client'});
 });
 
 app.get('/encode', function (req, res) {
