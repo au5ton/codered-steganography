@@ -1,6 +1,9 @@
 # codered-steganography
 CodeRED steganography project
 
+##Description
+Stego is a project by Austin Jackson, Matt Nyman, Arnaud Balma, and Ismael Almaguer that was made in 24 hours at CodeRED: Liftoff 2015. Steganography is a method of concealing data within other data. In our application, we use steganography with PNG images to hide text and entire files within them. We've also implemented optional, password-protected AES-256 encryption of the hidden data, to insure safety.
+
 ##Prerequisites
 - Requires node.js and npm to be installed
 
