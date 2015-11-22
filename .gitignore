@@ -1,4 +1,3 @@
 node_modules/
 uploads/
-test_img/
-test_img_out/
+static/
