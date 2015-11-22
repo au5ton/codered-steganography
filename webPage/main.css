@@ -1,9 +1,13 @@
-.introduction
+.introduction p
 {
-	font-family: Arial, Helvetica sans-serif
+	font-family: Arial, Helvetica sans-serif;
 
+}
+.introduction h1
+{
+	font-family: 'Syncopate', sans-serif;
 }
 .input 
 {
-	background-color: #b3b3cc
+	background-color: #b3b3cc;
 }
