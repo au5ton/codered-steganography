@@ -1,0 +1,4 @@
+var replaceOriginal = function(uploadedImg)
+{
+
+}

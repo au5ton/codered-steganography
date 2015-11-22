@@ -13,7 +13,6 @@
     	<script type="text/javascript" src="js/materialize.min.js"></script>
 	</head>
 	
-	
 <body>
 	<div class="introduction">
 		<div class="row">
@@ -40,7 +39,7 @@
 				<div class="originalImage">
 		        	<div class="card-panel grey lighten-5 z-depth-1">
 		          		<div class="row valign-wrapper">
-		              		<img src="images/mad.png" alt="" class="responsive-img">
+		              		<img src="images/default.png" alt="" class="responsive-img" id="origImg">
 		          		</div>
 		          			<span class="black-text">
 		            		Original Image
@@ -53,7 +52,7 @@
 				<div class="modifiedImage">
 		        	<div class="card-panel grey lighten-5 z-depth-1">
 		          		<div class="row valign-wrapper">
-		              		<img src="images/happy.png" alt="" class="responsive-img">
+		              		<img src="images/default.png" alt="" class="responsive-img" id="modImg">
 		          		</div>
 		          		<span class="black-text">
 		             Modified Image
@@ -70,7 +69,7 @@
 				<div class="col s3 m4 l6">
         			<form action="#">
     					<div class="file-field input-field">
-      						<div class="btn">
+      						<div class="btn" onclick="replaceOriginal()">
         						<span>Upload</span>
         						<input type="file">
       						</div>
@@ -99,11 +98,4 @@
   			</button>
         </div>
 	</div>
-
-
- 
-        
-
-
-	
 </html>
