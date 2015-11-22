@@ -1,0 +1,29 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='utf-8')
+    title CodeDay: Loteria
+    script(src='js/jquery-latest.min.js')
+    script(src='js/materialize.min.js')
+    link(href='css/materialize.min.css', rel='stylesheet')
+    style.
+      body {
+      background: #FF5252;
+      padding-top: 20px;
+      }
+      blockquote {
+      border-left-color: #f9a825;
+      }
+      input[type=text]:focus {
+      border-bottom: 1px solid #f9a825 !important;
+      box-shadow: 0 1px 0 0 #f9a825 !important;
+      }
+      input[type=text]:focus:not([readonly])+label {
+      color: #f9a825 !important;
+      }
+  body
+    .container
+      .card-panel.white
+        h3 Error
+        p #{text}
+        a(href='/') Click to go back to the homepage

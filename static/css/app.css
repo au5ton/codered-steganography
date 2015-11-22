@@ -1,0 +1,83 @@
+
+
+body {
+    background: #FF5252;
+    padding-top: 20px;
+}
+
+blockquote {
+    border-left-color: #F44336;
+}
+
+input[type=text]:focus:not([readonly])+label, input[type=password]:focus:not([readonly])+label, input[type=email]:focus:not([readonly])+label, input[type=url]:focus:not([readonly])+label, input[type=time]:focus:not([readonly])+label, input[type=date]:focus:not([readonly])+label, input[type=datetime-local]:focus:not([readonly])+label, input[type=tel]:focus:not([readonly])+label, input[type=number]:focus:not([readonly])+label, input[type=search]:focus:not([readonly])+label, textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #F44336;
+}
+
+input[type=text]:focus:not([readonly]), input[type=password]:focus:not([readonly]), input[type=email]:focus:not([readonly]), input[type=url]:focus:not([readonly]), input[type=time]:focus:not([readonly]), input[type=date]:focus:not([readonly]), input[type=datetime-local]:focus:not([readonly]), input[type=tel]:focus:not([readonly]), input[type=number]:focus:not([readonly]), input[type=search]:focus:not([readonly]), textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #F44336 !important;
+    box-shadow: 0 1px 0 0 #F44336 !important;
+}
+
+input[type=text]:focus:not([readonly])+label {
+    color: #F44336 !important;
+}
+
+textarea.materialize-textarea:focus:not([readonly]) {
+    border-bottom: 1px solid #F44336 !important;
+    box-shadow: 0 1px 0 0 #F44336 !important;
+}
+
+textarea.materialize-textarea:focus:not([readonly])+label {
+    color: #F44336 !important;
+}
+
+.input-field .prefix.active {
+    color: #F44336 !important;
+}
+input[type=checkbox]:checked+.lever {
+    background-color: #f46d63 !important;
+}
+.switch label input[type=checkbox]:checked+.lever:after {
+    background-color: #F44336 !important;
+}
+
+
+.pretitle {
+    margin-bottom: 0;
+    display: block;
+    text-align: center;
+}
+.title {
+    display: block;
+    text-align: center;
+    font-family: 'Syncopate', 'Roboto', sans-serif;
+    margin: 0.5em auto;
+}
+.subtitle {
+    margin-top: 0;
+}
+.main-panel .btn {
+    margin: 7px 0;
+}
+.getstarted {
+    display: block;
+    text-align: center;
+}
+.mode-select {
+    max-width: 500px;
+    display: inline-block;
+}
+
+.label {
+    font-size: 0.8rem;
+    color: #9e9e9e;
+}
+
+.browser-default {
+    width: auto !important;
+    display: inline-block !important;
+}
+
+#encode_form, #decode_form {
+    transition: opacity 0.5s;
+}

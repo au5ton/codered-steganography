@@ -10,10 +10,11 @@ var stego = require('./stego');
 
 
 app.use(express.static('static'));
-//app.use(express.static('uploads'));
+app.set('views', './views')
+app.set('view engine', 'jade');
 
 app.get('/', function (req, res) {
-    res.send('Hello World!');
+    res.sendFile('index.html', {root: './client'});
 });
 
 app.get('/encode', function (req, res) {
@@ -21,7 +22,7 @@ app.get('/encode', function (req, res) {
 });
 
 app.post('/encode', upload.array('files', 2), function (req, res, next) {
-    
+
     console.log(req.files);
     console.log(req.body);
 
@@ -114,11 +115,13 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
                 res.send(text);
             }
             catch (err) {
-                res.send('Bad text password');
+                res.render('error', {
+                    text: 'Bad text password'
+                });
             }
         }
         else {
-            
+
             try {
                 var data = decoded.data;
                 if (pw) {
@@ -148,7 +151,9 @@ app.post('/decode', upload.single('original_image'), function (req, res, next) {
                 });
             }
             catch (err) {
-                res.send('Bad bin password');
+                res.render('error', {
+                    text: 'Bad bin password'
+                });
             }
         }
     });
