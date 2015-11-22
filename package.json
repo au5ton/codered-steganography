@@ -2,9 +2,9 @@
   "name": "codered-steganography",
   "version": "1.0.0",
   "description": "Encode text inside images",
-  "main": "",
+  "main": "node webserver.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node webserver.js"
   },
   "repository": {
     "type": "git",
