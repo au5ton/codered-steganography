@@ -16,7 +16,7 @@ Stego is a project by Austin Jackson, Matt Nyman, Arnaud Balma, and Ismael Almag
 - You have the site running!
 
 ##How to use
-- Take any PNG image (We've given you some files to mess around with in the Test Files folder)
+- Take any PNG image (We've given you some files to mess around with in the [Test Files](https://github.com/au5ton/codered-steganography/releases/tag/v1.0) folder)
 - Take any file under half the size of the PNG image
 - Use the Encode section to hide your file in the PNG image (a password is optional, but you have to remember it!)
 - After pressing the submit button, you will be redirected to your new PNG image which contains the file you hid in it. If it doesn't download, right-click and Save As.
